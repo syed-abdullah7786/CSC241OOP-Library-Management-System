@@ -1,0 +1,20 @@
+
+digraph UML {
+  graph [rankdir=TB, bgcolor="white", pad="0.2", nodesep="0.35", ranksep="0.55", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#F4F7FB", color="#355070", fontname="Arial", fontsize=10, margin="0.15,0.10"];
+  edge [color="#355070", fontname="Arial", fontsize=9, arrowsize=0.8];
+  User [label="<<abstract>> User\n----------------------\n# id : int\n# name : string\n----------------------\n+ getRole() : string\n+ display() : void"];
+  Member [label="Member\n----------------------\n- borrowedBookId : int\n----------------------\n+ getRole() : string\n+ setBorrowedBookId() : void"];
+  Librarian [label="Librarian\n----------------------\n+ getRole() : string"];
+  Book [label="Book\n----------------------\n- id : int\n- title : string\n- author : string\n- available : bool\n----------------------\n+ display() : void\n+ setAvailable() : void"];
+  Loan [label="Loan\n----------------------\n- bookId : int\n- memberId : int\n- active : bool\n----------------------\n+ isActive() : bool\n+ setActive() : void"];
+  Library [label="Library\n----------------------\n- books : vector of Book\n- members : vector of Member\n- loans : vector of Loan\n- users : User objects\n----------------------\n+ addBook() : void\n+ registerMember() : void\n+ borrowBook() : void\n+ returnBook() : void\n+ save/load methods"];
+  Member -> User [arrowhead=empty];
+  Librarian -> User [arrowhead=empty];
+  Library -> Book [dir=both, arrowtail=diamond, arrowhead=none, label="owns many"];
+  Library -> Member [dir=both, arrowtail=diamond, arrowhead=none, label="owns many"];
+  Library -> Loan [dir=both, arrowtail=diamond, arrowhead=none, label="owns many"];
+  Library -> User [dir=both, arrowtail=diamond, arrowhead=none, label="owns users"];
+  Loan -> Book [style=dashed, arrowhead=vee, label="book ID"];
+  Loan -> Member [style=dashed, arrowhead=vee, label="member ID"];
+}

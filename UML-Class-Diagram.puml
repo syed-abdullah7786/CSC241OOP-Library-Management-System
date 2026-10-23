@@ -1,0 +1,63 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class User {
+  # id : int
+  # name : string
+  + User(userId, userName)
+  + getId() : int
+  + getName() : string
+  + getRole() : string {abstract}
+  + display() : void
+}
+
+class Member {
+  - borrowedBookId : int
+  + getRole() : string
+  + getBorrowedBookId() : int
+  + setBorrowedBookId(bookId) : void
+}
+
+class Librarian {
+  + getRole() : string
+}
+
+class Book {
+  - id : int
+  - title : string
+  - author : string
+  - available : bool
+  + display() : void
+  + setAvailable(value) : void
+}
+
+class Loan {
+  - bookId : int
+  - memberId : int
+  - active : bool
+  + isActive() : bool
+  + setActive(value) : void
+}
+
+class Library {
+  - books : vector<Book>
+  - members : vector<Member>
+  - loans : vector<Loan>
+  - users : vector<unique_ptr<User>>
+  + addBook() : void
+  + registerMember() : void
+  + borrowBook() : void
+  + returnBook() : void
+  + saveBooks() : void
+  + loadBooks() : void
+}
+
+User <|-- Member
+User <|-- Librarian
+Library *-- "many" Book
+Library *-- "many" Member
+Library *-- "many" Loan
+Library *-- "many" User
+Loan --> Book : bookId
+Loan --> Member : memberId
+@enduml
